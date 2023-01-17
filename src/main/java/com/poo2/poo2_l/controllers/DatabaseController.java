@@ -7,6 +7,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.lang.invoke.TypeDescriptor;
 import java.util.List;
 
 public class DatabaseController {
@@ -58,6 +59,19 @@ public class DatabaseController {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             result = session.createQuery("from " + nome).list();
+            session.getTransaction().commit();
+            session.close();
+        }
+        return result;
+    }
+
+    public Tarefa getTarefaPorID(Long id)
+    {
+        Tarefa result = null;
+        synchronized (this) {
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            result = session.get(Tarefa.class, id);
             session.getTransaction().commit();
             session.close();
         }
