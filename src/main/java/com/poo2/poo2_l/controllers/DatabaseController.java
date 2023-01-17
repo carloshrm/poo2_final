@@ -52,7 +52,7 @@ public class DatabaseController {
         }
     }
 
-    public List getTabela(String nome)
+    public <T> List getTabela(String nome)
     {
         List result = null;
         synchronized (this)
