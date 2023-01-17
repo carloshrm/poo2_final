@@ -11,6 +11,9 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">0123</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+<!--        <property name="hibernate.show_sql">true</property>-->
+
 
         <!-- SQL dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>

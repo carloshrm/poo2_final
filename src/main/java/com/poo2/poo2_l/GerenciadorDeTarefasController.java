@@ -3,7 +3,7 @@ package com.poo2.poo2_l;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class GerenciadorDeTarefasController {
     @FXML
     private Label welcomeText;
 

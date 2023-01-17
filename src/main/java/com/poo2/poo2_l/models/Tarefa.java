@@ -12,21 +12,17 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-//create table Tarefa(id serial primary key, titulo text, descricao text, data_criada date, data_limite date);
-
 @Entity
 @Table(name = "Tarefa")
 public class Tarefa {
     private Long id;
-    @Column(name = "descricao")
     private String descricao;
-    @Column(name = "titulo")
     private String titulo;
     private Date dataCriada;
     private Date dataLimite;
 
     public Tarefa() {
-        //
+        // utilizado pelo hibernate
     }
 
     public Tarefa(String desc, Date dl, String titulo) {
@@ -35,13 +31,13 @@ public class Tarefa {
         this.dataLimite = dl;
         this.titulo = titulo;
     }
+
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -68,7 +64,6 @@ public class Tarefa {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
     public String getDescricao() {
         return descricao;
     }
@@ -77,7 +72,6 @@ public class Tarefa {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
     public String getTitulo() {
         return titulo;
     }
@@ -87,6 +81,7 @@ public class Tarefa {
         return "Tarefa{" +
                 "id=" + id +
                 ", descricao='" + descricao + '\'' +
+                ", titulo='" + titulo + '\'' +
                 ", dataCriada=" + dataCriada +
                 ", dataLimite=" + dataLimite +
                 '}';
