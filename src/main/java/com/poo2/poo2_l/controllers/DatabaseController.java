@@ -32,7 +32,7 @@ public class DatabaseController {
         }
     }
 
-    public DatabaseController getDBControl()
+    public static DatabaseController getDBControl()
     {
         if (_dbControl == null)
             _dbControl = new DatabaseController();
@@ -52,7 +52,7 @@ public class DatabaseController {
         }
     }
 
-    public <T> List getTabela(String nome)
+    public List getTabela(String nome)
     {
         List result = null;
         synchronized (this)
@@ -64,16 +64,5 @@ public class DatabaseController {
             session.close();
         }
         return result;
-    }
-
-    public void test()
-    {
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        for ( var tar : (List<Tarefa>) result ) {
-            System.out.println(tar);
-        }
-        session.getTransaction().commit();
-        session.close();
     }
 }

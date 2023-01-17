@@ -20,6 +20,7 @@ public class Tarefa {
     private Long id;
     @Column(name = "descricao")
     private String descricao;
+    @Column(name = "titulo")
     private String titulo;
     private Date dataCriada;
     private Date dataLimite;
@@ -46,7 +47,7 @@ public class Tarefa {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_criada")
+    @Column(name = "datacriada")
     public void setDataCriada(Date dataCriada) {
         this.dataCriada = dataCriada;
     }
@@ -54,9 +55,8 @@ public class Tarefa {
         return dataCriada;
     }
 
-
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_limite")
+    @Column(name = "datalimite")
     public void setDataLimite(Date dataLimite) {
         this.dataLimite = dataLimite;
     }
@@ -71,6 +71,15 @@ public class Tarefa {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    @Column(name = "titulo")
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getTitulo() {
+        return titulo;
     }
 
     @Override

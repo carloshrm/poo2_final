@@ -1,12 +1,15 @@
 package com.poo2.poo2_l;
 
 import com.poo2.poo2_l.controllers.DatabaseController;
+import com.poo2.poo2_l.models.Tarefa;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class HelloApplication extends Application {
 
@@ -21,8 +24,9 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        var db = new DatabaseController();
-        db.test();
+        var db = DatabaseController.getDBControl();
+        db.setEntidade(new Tarefa("abcd", new Date(), "Teste"));
+        db.setEntidade(new Tarefa("1234", new Date(), "ZZZZ"));
         launch();
     }
 }
