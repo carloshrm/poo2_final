@@ -14,7 +14,7 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "Tarefa")
-public class Tarefa {
+public class Tarefa implements IEntidade {
     private Long id;
     private String descricao;
     private String titulo;
@@ -25,10 +25,10 @@ public class Tarefa {
         // utilizado pelo hibernate
     }
 
-    public Tarefa(String desc, Date dl, String titulo) {
-        this.descricao = desc;
+    public Tarefa(String descricao, Date dataLimite, String titulo) {
+        this.descricao = descricao;
         this.dataCriada = new Date();
-        this.dataLimite = dl;
+        this.dataLimite = dataLimite;
         this.titulo = titulo;
     }
 
@@ -60,7 +60,10 @@ public class Tarefa {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datalimite")
     public void setDataLimite(Date dataLimite) {
-        this.dataLimite = dataLimite;
+        if (dataLimite.before(dataCriada))
+            this.dataLimite = new Date();
+        else
+            this.dataLimite = dataLimite;
     }
 
     public String getDescricao() {
@@ -69,7 +72,10 @@ public class Tarefa {
 
     @Column(name = "descricao")
     public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        if (descricao.isBlank())
+            this.descricao = "Sem Descrição.";
+        else
+            this.descricao = descricao;
     }
 
     public String getTitulo() {
@@ -78,7 +84,10 @@ public class Tarefa {
 
     @Column(name = "titulo")
     public void setTitulo(String titulo) {
-        this.titulo = titulo;
+        if (titulo.isBlank())
+            this.titulo = "Sem Título.";
+        else
+            this.titulo = titulo;
     }
 
     @Override

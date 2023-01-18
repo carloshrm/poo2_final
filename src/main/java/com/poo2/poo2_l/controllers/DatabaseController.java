@@ -1,5 +1,6 @@
 package com.poo2.poo2_l.controllers;
 
+import com.poo2.poo2_l.models.IEntidade;
 import com.poo2.poo2_l.models.Tarefa;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -40,7 +41,7 @@ public class DatabaseController {
         return _dbControl;
     }
 
-    public void setEntidade(Object e) {
+    public void setEntidade(IEntidade e) {
         // adiciona uma instancia de uma das entidades no banco de dados
         synchronized (this) {
             Session session = sessionFactory.openSession();
@@ -64,8 +65,7 @@ public class DatabaseController {
         return result;
     }
 
-    public <T> T getEntidadePorID(Long id, Class<T> classe)
-    {
+    public <T extends IEntidade> T getEntidadePorID(Long id, Class<T> classe) {
         T result = null;
         synchronized (this) {
             Session session = sessionFactory.openSession();
@@ -77,7 +77,7 @@ public class DatabaseController {
         return result;
     }
 
-    public void updateEntidade(Object e) {
+    public void updateEntidade(IEntidade e) {
         synchronized (this) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
@@ -87,8 +87,7 @@ public class DatabaseController {
         }
     }
 
-    public void removeEntidade(Object e)
-    {
+    public void removeEntidade(IEntidade e) {
         synchronized (this) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();

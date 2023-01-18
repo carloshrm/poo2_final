@@ -1,4 +1,4 @@
-package com.poo2.poo2_l;
+package com.poo2.poo2_l.controllers.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

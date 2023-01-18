@@ -11,4 +11,6 @@ module com.poo2.poo2_l {
     opens com.poo2.poo2_l.models to javafx.fxml;
     exports com.poo2.poo2_l.controllers;
     opens com.poo2.poo2_l.controllers to javafx.fxml;
+    exports com.poo2.poo2_l.controllers.ui;
+    opens com.poo2.poo2_l.controllers.ui to javafx.fxml;
 }

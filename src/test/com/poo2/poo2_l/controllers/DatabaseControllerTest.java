@@ -2,6 +2,7 @@ package com.poo2.poo2_l.controllers;
 
 import java.util.*;
 
+import com.poo2.poo2_l.models.IEntidade;
 import com.poo2.poo2_l.models.Tarefa;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
@@ -10,17 +11,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DatabaseControllerTest {
     private static DatabaseController _dbc;
-    private static List<Tarefa> exemplosUsados;
+    private static List<IEntidade> exemplosUsados;
 
     @BeforeAll
     public static void setup() {
         _dbc = DatabaseController.getDBControl();
-        exemplosUsados = new ArrayList<Tarefa>();
+        exemplosUsados = new ArrayList<IEntidade>();
     }
 
     @AfterAll
     public static void limparExemplos() {
-        for (Tarefa t : exemplosUsados) {
+        for (var t : exemplosUsados) {
             _dbc.removeEntidade(t);
         }
     }
