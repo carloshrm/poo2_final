@@ -16,14 +16,14 @@ public class GerenciadorDeTarefas extends Application {
         var db = DatabaseController.getDBControl();
         var tarefaDemo1 = new Tarefa("abcd", new Date(), "Teste");
         var tarefaDemo2 = new Tarefa("1234", new Date(), "ZZZZ");
-        db.setTarefa(tarefaDemo1);
-        db.setTarefa(tarefaDemo2);
+        db.setEntidade(tarefaDemo1);
+        db.setEntidade(tarefaDemo2);
 //        db.getTabela("Tarefa").forEach(t -> System.out.println(t));
 //        tarefaDemo1.setTitulo("00000");
 //        db.updateTarefa(tarefaDemo1);
 //        db.getTabela("Tarefa").forEach(t -> System.out.println(t));
-        db.removeTarefa(tarefaDemo1);
-        db.removeTarefa(tarefaDemo2);
+        db.removeEntidade(tarefaDemo1);
+        db.removeEntidade(tarefaDemo2);
         System.out.println("removidas");
         db.getTabela("Tarefa").forEach(t -> System.out.println(t));
         launch();
