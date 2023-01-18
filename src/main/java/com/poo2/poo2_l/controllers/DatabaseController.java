@@ -7,7 +7,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.lang.invoke.TypeDescriptor;
 import java.util.List;
 
 public class DatabaseController {
@@ -41,8 +40,8 @@ public class DatabaseController {
         return _dbControl;
     }
 
-    public void setTarefa(Tarefa e) {
-        // adiciona uma instancia da classe Tarefa ao banco de dados
+    public void setEntidade(Object e) {
+        // adiciona uma instancia de uma das entidades no banco de dados
         synchronized (this) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
@@ -53,7 +52,7 @@ public class DatabaseController {
     }
 
     public List getTabela(String nome) {
-        // retorna uma busca no banco de dados por todas as entradas da tabela com um nome especifico
+        // retorna uma busca no banco de dados por todas as entradas na tabela com o nome passado por parametro
         List result = null;
         synchronized (this) {
             Session session = sessionFactory.openSession();
@@ -65,35 +64,35 @@ public class DatabaseController {
         return result;
     }
 
-    public Tarefa getTarefaPorID(Long id)
+    public <T> T getEntidadePorID(Long id, Class<T> classe)
     {
-        Tarefa result = null;
+        T result = null;
         synchronized (this) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            result = session.get(Tarefa.class, id);
+            result = classe.cast(session.get(classe, id));
             session.getTransaction().commit();
             session.close();
         }
         return result;
     }
 
-    public void updateTarefa(Tarefa t) {
+    public void updateEntidade(Object e) {
         synchronized (this) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            session.merge(t);
+            session.merge(e);
             session.getTransaction().commit();
             session.close();
         }
     }
 
-    public void removeTarefa(Tarefa t)
+    public void removeEntidade(Object e)
     {
         synchronized (this) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            session.remove(t);
+            session.remove(e);
             session.getTransaction().commit();
             session.close();
         }
