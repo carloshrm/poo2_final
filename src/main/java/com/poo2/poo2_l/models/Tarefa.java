@@ -33,13 +33,18 @@ public class Tarefa {
     }
 
     @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getDataCriada() {
+        return dataCriada;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -47,8 +52,9 @@ public class Tarefa {
     public void setDataCriada(Date dataCriada) {
         this.dataCriada = dataCriada;
     }
-    public Date getDataCriada() {
-        return dataCriada;
+
+    public Date getDataLimite() {
+        return dataLimite;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,24 +62,23 @@ public class Tarefa {
     public void setDataLimite(Date dataLimite) {
         this.dataLimite = dataLimite;
     }
-    public Date getDataLimite() {
-        return dataLimite;
+
+    public String getDescricao() {
+        return descricao;
     }
 
     @Column(name = "descricao")
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public String getDescricao() {
-        return descricao;
+
+    public String getTitulo() {
+        return titulo;
     }
 
     @Column(name = "titulo")
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-    public String getTitulo() {
-        return titulo;
     }
 
     @Override
@@ -85,5 +90,13 @@ public class Tarefa {
                 ", dataCriada=" + dataCriada +
                 ", dataLimite=" + dataLimite +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Tarefa) {
+            return this.id == ((Tarefa) obj).getId();
+        } else
+            return false;
     }
 }
