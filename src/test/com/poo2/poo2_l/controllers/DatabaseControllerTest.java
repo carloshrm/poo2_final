@@ -21,7 +21,7 @@ class DatabaseControllerTest {
     @AfterAll
     public static void limparExemplos() {
         for (Tarefa t : exemplosUsados) {
-            _dbc.removeTarefa(t);
+            _dbc.removeEntidade(t);
         }
     }
 
@@ -31,7 +31,7 @@ class DatabaseControllerTest {
         var exemplosLocais = new ArrayList<Tarefa>();
         for (int i = 0; i < n; i++) {
             exemplosLocais.add(new Tarefa("Exemplo " + i, new Date(), "Titulo " + i));
-            _dbc.setTarefa(exemplosLocais.get(i));
+            _dbc.setEntidade(exemplosLocais.get(i));
         }
 
         var dadosDaDB = _dbc.getTabela("Tarefa");
@@ -44,31 +44,31 @@ class DatabaseControllerTest {
     @Test
     public void setTarefaTest() {
         var exemplo = new Tarefa("Exemplo de Set", new Date(), "Teste Set");
-        _dbc.setTarefa(exemplo);
-        assertNotNull(_dbc.getTarefaPorID(exemplo.getId()));
+        _dbc.setEntidade(exemplo);
+        assertNotNull(_dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass()));
         exemplosUsados.add(exemplo);
     }
 
     @Test
     public void removeTarefaTest() {
         var exemplo = new Tarefa("Exemplo de Remove", new Date(), "Teste Remove");
-        _dbc.setTarefa(exemplo);
-        _dbc.removeTarefa(exemplo);
-        assertNull(_dbc.getTarefaPorID(exemplo.getId()));
+        _dbc.setEntidade(exemplo);
+        _dbc.removeEntidade(exemplo);
+        assertNull(_dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass()));
     }
 
     @Test
     public void editaTarefaTest() {
         var exemplo = new Tarefa("Exemplo de Update", new Date(), "Teste Update");
-        _dbc.setTarefa(exemplo);
+        _dbc.setEntidade(exemplo);
         String tituloOriginal = exemplo.getTitulo();
         String descOriginal = exemplo.getDescricao();
 
         exemplo.setTitulo("Titulo Editado");
         exemplo.setDescricao("Desc Editada");
 
-        _dbc.updateTarefa(exemplo);
-        var exemploDaDB = _dbc.getTarefaPorID(exemplo.getId());
+        _dbc.updateEntidade(exemplo);
+        var exemploDaDB = _dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass());
         assertNotEquals(exemploDaDB.getTitulo(), tituloOriginal);
         assertNotEquals(exemploDaDB.getDescricao(), descOriginal);
         exemplosUsados.add(exemplo);
