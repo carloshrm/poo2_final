@@ -48,7 +48,7 @@ public class Tarefa implements IEntidade {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "datacriada")
+    @Column(name = "datacriada", nullable = false)
     public void setDataCriada(Date dataCriada) {
         this.dataCriada = dataCriada;
     }
@@ -58,7 +58,7 @@ public class Tarefa implements IEntidade {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "datalimite")
+    @Column(name = "datalimite", nullable = false)
     public void setDataLimite(Date dataLimite) {
         if (dataLimite.before(dataCriada))
             this.dataLimite = new Date();
@@ -70,7 +70,7 @@ public class Tarefa implements IEntidade {
         return descricao;
     }
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", nullable = false, length = 180)
     public void setDescricao(String descricao) {
         if (descricao.isBlank())
             this.descricao = "Sem Descrição.";
@@ -82,7 +82,7 @@ public class Tarefa implements IEntidade {
         return titulo;
     }
 
-    @Column(name = "titulo")
+    @Column(name = "titulo", nullable = false, length = 40)
     public void setTitulo(String titulo) {
         if (titulo.isBlank())
             this.titulo = "Sem Título.";
