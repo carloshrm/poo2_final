@@ -26,6 +26,7 @@
 
         <!-- Annotated entity classes -->
         <mapping class="com.poo2.poo2_l.models.Tarefa"/>
+        <mapping class="com.poo2.poo2_l.models.Projeto"/>
 
     </session-factory>
 </hibernate-configuration>

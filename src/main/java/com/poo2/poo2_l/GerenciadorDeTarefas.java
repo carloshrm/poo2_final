@@ -21,7 +21,7 @@ public class GerenciadorDeTarefas extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GerenciadorDeTarefas.class.getResource("GerenciadorDeTarefas.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Gerenciador de Tarefas");
         stage.setScene(scene);
         GerenciadorDeTarefasController ctrl = fxmlLoader.getController();
         ctrl.setTarefaServ(new TarefaService());

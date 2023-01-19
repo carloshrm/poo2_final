@@ -3,8 +3,8 @@ package com.poo2.poo2_l;
 import com.poo2.poo2_l.controllers.DatabaseController;
 import com.poo2.poo2_l.models.Tarefa;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -12,26 +12,26 @@ import java.util.List;
  * Esta classe procura implementar o padrão facade, garantindo o comportamento correto da lógica do programa em relação
  * ao banco de dados, simplificando quaisquer operações sobre os dados do programa.
  */
-public class TarefaService {
-    private List<Tarefa> todasTarefas;
+public class TarefaService extends Service<Tarefa> {
+    private Set<Tarefa> _todas;
 
     public TarefaService() {
-        todasTarefas = new ArrayList<>();
+        _todas = new HashSet<>();
         lerTarefas();
     }
 
     private void lerTarefas() {
-        todasTarefas.clear();
-        todasTarefas.addAll(DatabaseController.getDBControl().getTabela("Tarefa"));
+        _todas.clear();
+        _todas.addAll(DatabaseController.getDBControl().getTabela("Tarefa"));
     }
 
-    public List<Tarefa> getTodasTarefas() {
-        return todasTarefas;
+    public Set<Tarefa> getTodas() {
+        lerTarefas();
+        return _todas;
     }
 
-    public void adicionarTarefa(Tarefa t) {
-        todasTarefas.add(t);
+    public void criar(Tarefa t) {
+        _todas.add(t);
         DatabaseController.getDBControl().setEntidade(t);
     }
-
 }

@@ -30,6 +30,7 @@ public class DatabaseController {
         } catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
             System.out.println(e.getMessage());
+            System.out.println(e.getCause());
         }
     }
 
