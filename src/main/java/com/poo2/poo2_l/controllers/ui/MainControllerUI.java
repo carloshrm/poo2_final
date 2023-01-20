@@ -6,19 +6,12 @@ import com.poo2.poo2_l.models.Projeto;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 
-import java.util.Collection;
-import java.util.List;
-
-public class GerenciadorDeTarefasControllerUI {
+public class MainControllerUI {
     @FXML
     private TabPane painelPrincipal;
     private TarefaService _tarefaService;
@@ -36,24 +29,30 @@ public class GerenciadorDeTarefasControllerUI {
     }
 
     private void setTabs() {
-        var projetos = _projetoService.getTudo().stream().map(p -> {
+        painelPrincipal.getTabs().get(0).setContent(preencherTabComTarefas(null));
+
+        var projetosDoUsuario = _projetoService.getTudo().stream().map(p -> {
             var t = new Tab(p.getTitulo());
-            t.setId(p.getId().toString());
             t.setUserData(p);
             return t;
         }).toList();
-        painelPrincipal.getTabs().addAll(projetos);
+        painelPrincipal.getTabs().addAll(projetosDoUsuario);
         painelPrincipal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> evento, Tab tabAnt, Tab tabClicada) {
-                System.out.println(tabClicada.getUserData());
-                var ts = _tarefaService.getPorProjeto(((Projeto) tabClicada.getUserData()));
-                var info = ts.stream().map(tr -> new Label(tr.toString())).toList();
-                var fp = new FlowPane();
-                fp.getChildren().addAll(info);
-                tabClicada.setContent(fp);
+                tabClicada.setContent(preencherTabComTarefas((Projeto) tabClicada.getUserData()));
             }
         });
+    }
+
+    private FlowPane preencherTabComTarefas(Projeto p) {
+        var info = _tarefaService
+                .getPorProjeto(p)
+                .stream()
+                .map(tr -> new Label(tr.toString())).toList();
+        var painel = new FlowPane();
+        painel.getChildren().addAll(info);
+        return painel;
     }
 
 //    @FXML
