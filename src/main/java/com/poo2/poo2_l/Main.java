@@ -21,8 +21,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         exemplos();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/Main.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
         stage.setTitle("Gerenciador de Tarefas");
         stage.setScene(scene);
         stage.show();
