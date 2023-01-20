@@ -4,5 +4,5 @@ import jakarta.persistence.Entity;
 
 @Entity
 public interface IEntidade {
-    public Long getId();
+    Long getId();
 }

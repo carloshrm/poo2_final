@@ -3,17 +3,14 @@ package com.poo2.poo2_l.models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 @Entity
 @Table(name = "Projeto")
-public class Projeto implements IEntidade {
+public class Projeto implements IEntidade, Serializable {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "titulo", nullable = false, length = 20)
@@ -67,5 +64,18 @@ public class Projeto implements IEntidade {
 
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && obj instanceof Projeto)
+            return this.id == ((Projeto) obj).getId();
+        else
+            return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id);
     }
 }

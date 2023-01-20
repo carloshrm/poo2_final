@@ -1,7 +1,8 @@
 package com.poo2.poo2_l;
 
-import com.poo2.poo2_l.controllers.DatabaseController;
-import com.poo2.poo2_l.controllers.ui.GerenciadorDeTarefasController;
+import com.poo2.poo2_l.controllers.services.ProjetoService;
+import com.poo2.poo2_l.controllers.services.TarefaService;
+import com.poo2.poo2_l.models.Projeto;
 import com.poo2.poo2_l.models.Tarefa;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,10 +22,27 @@ public class GerenciadorDeTarefas extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GerenciadorDeTarefas.class.getResource("GerenciadorDeTarefas.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        exemplos();
         stage.setTitle("Gerenciador de Tarefas");
         stage.setScene(scene);
-        GerenciadorDeTarefasController ctrl = fxmlLoader.getController();
-        ctrl.setTarefaServ(new TarefaService());
         stage.show();
+    }
+
+    public void exemplos() {
+        var ctrl = new ProjetoService();
+        var p = ctrl.getTudo();
+        if (p == null || p.isEmpty()) {
+            ctrl.criar(new Projeto("Exemplo 1", "Exemplo de projeto", new Date()));
+        }
+        var ctrl2 = new TarefaService();
+        var t = ctrl2.getTudo();
+        if (t == null || t.isEmpty()) {
+            ctrl2.criar(new Tarefa("Titulo 1", new Date(), "Exemplo 1"));
+            ctrl2.criar(new Tarefa("Titulo 2", new Date(), "Exemplo 2"));
+            var t3 = new Tarefa("Titulo 3", new Date(), "Exemplo 3");
+            t3.setProjeto(ctrl.getTudo().iterator().next());
+            ctrl2.criar(t3);
+        }
+
     }
 }

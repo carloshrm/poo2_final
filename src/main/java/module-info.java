@@ -5,9 +5,8 @@ open module com.poo2.poo2_l {
     requires jakarta.persistence;
     requires java.naming;
 
-
     exports com.poo2.poo2_l;
     exports com.poo2.poo2_l.models;
-    exports com.poo2.poo2_l.controllers;
     exports com.poo2.poo2_l.controllers.ui;
+
 }

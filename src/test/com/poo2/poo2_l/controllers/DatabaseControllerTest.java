@@ -2,7 +2,9 @@ package com.poo2.poo2_l.controllers;
 
 import java.util.*;
 
+import com.poo2.poo2_l.controllers.db.DatabaseController;
 import com.poo2.poo2_l.models.IEntidade;
+import com.poo2.poo2_l.models.Projeto;
 import com.poo2.poo2_l.models.Tarefa;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
@@ -45,6 +47,14 @@ class DatabaseControllerTest {
     @Test
     public void setTarefaTest() {
         var exemplo = new Tarefa("Exemplo de Set", new Date(), "Teste Set");
+        _dbc.setEntidade(exemplo);
+        assertNotNull(_dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass()));
+        exemplosUsados.add(exemplo);
+    }
+
+    @Test
+    public void setProjetoTest() {
+        var exemplo = new Projeto("Titulo 1", "Descricao 1", new Date());
         _dbc.setEntidade(exemplo);
         assertNotNull(_dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass()));
         exemplosUsados.add(exemplo);

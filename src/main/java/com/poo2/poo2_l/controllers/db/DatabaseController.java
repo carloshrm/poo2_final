@@ -1,7 +1,6 @@
-package com.poo2.poo2_l.controllers;
+package com.poo2.poo2_l.controllers.db;
 
 import com.poo2.poo2_l.models.IEntidade;
-import com.poo2.poo2_l.models.Tarefa;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
