@@ -37,27 +37,17 @@ public class MainUI implements IObserver {
     }
 
     private void setTabs() {
-        painelPrincipal.getTabs().get(0).setContent(configurarTab(null));
+        Tab tabPrincipal = painelPrincipal.getTabs().get(0);
+        tabPrincipal.setContent(configurarTab(null));
+        painelPrincipal.getTabs().clear();
         var projetosDoUsuario = projSvc.getTudo().stream().map(p -> {
             var t = new Tab(p.getTitulo());
             t.setUserData(p);
             t.setId(p.getId().toString());
             return t;
         }).toList();
-        for (Tab tabNovas : projetosDoUsuario) {
-            boolean ok = true;
-            for (Tab tabUI : painelPrincipal.getTabs()) {
-                var projeto = (Projeto) tabNovas.getUserData();
-                if (tabNovas.getUserData() == tabUI.getUserData()) {
-                    tabUI.setText(projeto.getTitulo());
-                    tabUI.setContent(configurarTab(projeto));
-                    ok = false;
-                    break;
-                }
-            }
-            if (ok)
-                painelPrincipal.getTabs().add(tabNovas);
-        }
+        painelPrincipal.getTabs().add(tabPrincipal);
+        painelPrincipal.getTabs().addAll(projetosDoUsuario);
         painelPrincipal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> evento, Tab tabAnt, Tab tabClicada) {

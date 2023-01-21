@@ -1,5 +1,6 @@
 package com.poo2.poo2_l.controllers.ui;
 
+import com.poo2.poo2_l.IComando;
 import com.poo2.poo2_l.controllers.services.ProjetoService;
 import com.poo2.poo2_l.models.Projeto;
 import com.poo2.poo2_l.models.Tarefa;
@@ -58,13 +59,13 @@ public class ProjetoUI extends FlowPane {
 
     @FXML
     private void onRemoverProjeto() {
-        ViewService.getInstance().fazerAviso(new Callable() {
+        var comando = new IComando() {
             @Override
-            public Object call() throws Exception {
+            public void executar() {
                 ProjetoService.getInstance().remover(_projeto);
-                return null;
             }
-        }, "Tem certeza que deseja remover esse projeto? As tarefas serão movidas para a seção sem projeto.").show();
+        };
+        ViewService.getInstance().fazerAviso(comando, "Tem certeza que deseja remover esse projeto? As tarefas serão movidas para a seção sem projeto.").show();
     }
 
 }

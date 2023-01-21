@@ -1,5 +1,6 @@
 package com.poo2.poo2_l.controllers.ui;
 
+import com.poo2.poo2_l.IComando;
 import com.poo2.poo2_l.Main;
 import com.poo2.poo2_l.controllers.services.Service;
 import com.poo2.poo2_l.models.Projeto;
@@ -41,7 +42,7 @@ public class ViewService {
         return null;
     }
 
-    public Stage fazerAviso(Callable c, String conteudo) {
+    public Stage fazerAviso(IComando c, String conteudo) {
         try {
             var fxmlLoader = new FXMLLoader(Main.class.getResource("view/Aviso.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
