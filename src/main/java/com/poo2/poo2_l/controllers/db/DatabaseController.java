@@ -9,12 +9,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.List;
 
+/**
+ * Classe que representa um objeto utilizado para realizar operações sobre o banco de dados
+ * configuração do hibernate/banco de dados é feita no construtor, configurado para utilizar uma instancia local de PostgreSQL
+ * é utilizado o padrão singleton para manter uma unica referencia sobre controle
+ */
 public class DatabaseController {
-    /*
-    Classe que representa um objeto utilizado para realizar operações sobre o banco de dados
-    configuração do hibernate/banco de dados é feita no construtor, configurado para utilizar uma instancia local de PostgreSQL
-    é utilizado o padrão singleton para manter uma unica referencia sobre controle
-    */
 
     private static DatabaseController _dbControl;
     private SessionFactory sessionFactory;
@@ -52,13 +52,13 @@ public class DatabaseController {
         }
     }
 
-    public List getTabela(String nome) {
+    public <T extends IEntidade> List getTabela(Class<T> c) {
         // retorna uma busca no banco de dados por todas as entradas na tabela com o nome passado por parametro
         List result = null;
         synchronized (this) {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            result = session.createQuery("from " + nome).list();
+            result = session.createQuery("from " + c.getName()).list();
             session.getTransaction().commit();
             session.close();
         }

@@ -30,16 +30,19 @@ class DatabaseControllerTest {
 
     @Test
     public void selectTabelaTest() {
-        int n = 10;
-        var exemplosLocais = new ArrayList<Tarefa>();
-        for (int i = 0; i < n; i++) {
-            exemplosLocais.add(new Tarefa("Exemplo " + i, new Date(), "Titulo " + i));
+        var r = new Random();
+        var exemplosLocais = new ArrayList<IEntidade>();
+        for (int i = 0; i < 100; i++) {
+            exemplosLocais.add(r.nextInt() % 2 == 0
+                    ? (new Tarefa("Exemplo " + i, new Date(), "Desc " + i))
+                    : (new Projeto("Exemplo" + i, "Desc" + i, new Date()))
+            );
             _dbc.setEntidade(exemplosLocais.get(i));
         }
-
-        var dadosDaDB = _dbc.getTabela("Tarefa");
+        var tarefasDB = _dbc.getTabela(Tarefa.class);
+        var projetosDB = _dbc.getTabela(Projeto.class);
         for (var ex : exemplosLocais) {
-            assertTrue(dadosDaDB.contains(ex));
+            assertTrue(tarefasDB.contains(ex) || projetosDB.contains(ex));
         }
         exemplosUsados.addAll(exemplosLocais);
     }
@@ -56,7 +59,9 @@ class DatabaseControllerTest {
     public void setProjetoTest() {
         var exemplo = new Projeto("Titulo 1", "Descricao 1", new Date());
         _dbc.setEntidade(exemplo);
-        assertNotNull(_dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass()));
+        var respostaDB = _dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass());
+        assertNotNull(respostaDB);
+        assertTrue(respostaDB instanceof Projeto);
         exemplosUsados.add(exemplo);
     }
 

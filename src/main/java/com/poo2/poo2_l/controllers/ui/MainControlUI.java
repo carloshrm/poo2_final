@@ -11,7 +11,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
 
-public class MainControllerUI {
+public class MainControlUI {
     @FXML
     private TabPane painelPrincipal;
     private TarefaService _tarefaService;
@@ -29,7 +29,7 @@ public class MainControllerUI {
     }
 
     private void setTabs() {
-        painelPrincipal.getTabs().get(0).setContent(preencherTabComTarefas(null));
+//        painelPrincipal.getTabs().get(0).setContent(preencherTabComTarefas(null));
 
         var projetosDoUsuario = _projetoService.getTudo().stream().map(p -> {
             var t = new Tab(p.getTitulo());
@@ -40,26 +40,9 @@ public class MainControllerUI {
         painelPrincipal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> evento, Tab tabAnt, Tab tabClicada) {
-                tabClicada.setContent(preencherTabComTarefas((Projeto) tabClicada.getUserData()));
+                var projeto = (Projeto) tabClicada.getUserData();
+                tabClicada.setContent(new ProjetoControlUI(projeto, _tarefaService.getPorProjeto(projeto)));
             }
         });
     }
-
-    private FlowPane preencherTabComTarefas(Projeto p) {
-        var info = _tarefaService
-                .getPorProjeto(p)
-                .stream()
-                .map(tr -> new Label(tr.toString())).toList();
-        var painel = new FlowPane();
-        painel.getChildren().addAll(info);
-        return painel;
-    }
-
-//    @FXML
-//    protected void onHelloButtonClick() {
-//        _tarefaService.criar(new Tarefa("", new Date(), ""));
-//        StringBuilder test = new StringBuilder();
-//        _tarefaService.getTodas().forEach(t -> test.append(t.toString() + "\n"));
-//        welcomeText.setText(test.toString());
-//    }
 }

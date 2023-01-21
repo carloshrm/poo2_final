@@ -23,7 +23,7 @@ public class TarefaService extends Service<Tarefa> {
     }
 
     private void lerTarefas() {
-        var query = DatabaseController.getDBControl().getTabela("Tarefa");
+        var query = DatabaseController.getDBControl().getTabela(Tarefa.class);
         if (!query.isEmpty() && query.iterator().next() instanceof IEntidade) {
             _todas.clear();
             _todas.addAll(query);

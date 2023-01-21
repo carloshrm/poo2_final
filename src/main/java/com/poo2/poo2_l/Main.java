@@ -23,7 +23,7 @@ public class Main extends Application {
         exemplos();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/Main.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("view/Main.css").toExternalForm());
         stage.setTitle("Gerenciador de Tarefas");
         stage.setScene(scene);
         stage.show();

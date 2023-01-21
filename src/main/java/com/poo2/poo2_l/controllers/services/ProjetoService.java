@@ -17,7 +17,7 @@ public class ProjetoService extends Service<Projeto> {
     }
 
     private void lerProjetos() {
-        var query = DatabaseController.getDBControl().getTabela("Projeto");
+        var query = DatabaseController.getDBControl().getTabela(Projeto.class);
         if (!query.isEmpty() && query.iterator().next() instanceof IEntidade) {
             _todos.addAll(query);
         }
