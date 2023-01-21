@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.Set;
@@ -17,29 +18,23 @@ public class ProjetoControlUI extends FlowPane {
     private Label projetoTituloLabel;
     @FXML
     private Label projetoDescLabel;
+    @FXML
+    private Pane tarefasPane;
 
     private Projeto _projeto;
     private Set<Tarefa> _tarefas;
 
-    public ProjetoControlUI(Projeto p, Set<Tarefa> t) {
+    public void setInfo(Projeto p, Set<Tarefa> t) {
         _projeto = p;
         _tarefas = t;
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/Projeto.fxml"));
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    @FXML
-    public void initialize() {
         if (_projeto != null) {
             projetoTituloLabel.setText(_projeto.getTitulo());
             projetoDescLabel.setText(_projeto.getDescricao());
+        } else {
+            projetoTituloLabel.setText("Tarefas");
+            projetoDescLabel.setText("Tarefas sem um projeto definido.");
         }
         var info = _tarefas.stream().map(tr -> new Label(tr.toString())).toList();
-        this.getChildren().addAll(info);
+        tarefasPane.getChildren().addAll(info);
     }
 }

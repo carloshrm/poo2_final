@@ -1,15 +1,18 @@
 package com.poo2.poo2_l.controllers.ui;
 
+import com.poo2.poo2_l.Main;
 import com.poo2.poo2_l.controllers.services.ProjetoService;
 import com.poo2.poo2_l.controllers.services.TarefaService;
 import com.poo2.poo2_l.models.Projeto;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.FlowPane;
+
+import java.io.IOException;
 
 public class MainControlUI {
     @FXML
@@ -29,7 +32,7 @@ public class MainControlUI {
     }
 
     private void setTabs() {
-//        painelPrincipal.getTabs().get(0).setContent(preencherTabComTarefas(null));
+        painelPrincipal.getTabs().get(0).setContent(configurarTab(null));
 
         var projetosDoUsuario = _projetoService.getTudo().stream().map(p -> {
             var t = new Tab(p.getTitulo());
@@ -41,8 +44,25 @@ public class MainControlUI {
             @Override
             public void changed(ObservableValue<? extends Tab> evento, Tab tabAnt, Tab tabClicada) {
                 var projeto = (Projeto) tabClicada.getUserData();
-                tabClicada.setContent(new ProjetoControlUI(projeto, _tarefaService.getPorProjeto(projeto)));
+                tabClicada.setContent(configurarTab(projeto));
             }
         });
     }
+
+    private Node configurarTab(Projeto p) {
+        var loader = new FXMLLoader(Main.class.getResource("view/Projeto.fxml"));
+        Node n = null;
+        try {
+            n = loader.load();
+            ProjetoControlUI ctrl = loader.getController();
+            ctrl.setInfo(p, _tarefaService.getPorProjeto(p));
+            loader.setController(ctrl);
+            return n;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+        }
+        return null;
+    }
+
 }
