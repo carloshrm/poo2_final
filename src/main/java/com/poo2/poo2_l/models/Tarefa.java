@@ -2,6 +2,7 @@ package com.poo2.poo2_l.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,10 +18,10 @@ public class Tarefa implements IEntidade {
     private String titulo;
     @Temporal(TemporalType.DATE)
     @Column(name = "datacriada", nullable = false)
-    private Date dataCriada;
+    private LocalDate dataCriada;
     @Temporal(TemporalType.DATE)
     @Column(name = "datalimite", nullable = false)
-    private Date dataLimite;
+    private LocalDate dataLimite;
     @ManyToOne(targetEntity = Projeto.class)
     @JoinColumn(name = "projetoID", referencedColumnName = "id", nullable = true)
     private Projeto projeto;
@@ -29,9 +30,9 @@ public class Tarefa implements IEntidade {
         // utilizado pelo hibernate
     }
 
-    public Tarefa(String titulo, Date dataLimite, String descricao) {
+    public Tarefa(String titulo, LocalDate dataLimite, String descricao) {
         this.descricao = descricao;
-        this.dataCriada = new Date();
+        this.dataCriada = LocalDate.now();
         this.dataLimite = dataLimite;
         this.titulo = titulo;
     }
@@ -51,21 +52,20 @@ public class Tarefa implements IEntidade {
         this.projeto = projeto;
     }
 
-    public Date getDataCriada() {
+    public LocalDate getDataCriada() {
         return dataCriada;
     }
 
-    public void setDataCriada(Date dataCriada) {
+    public void setDataCriada(LocalDate dataCriada) {
         this.dataCriada = dataCriada;
     }
 
-    public Date getDataLimite() {
+    public LocalDate getDataLimite() {
         return dataLimite;
     }
 
-    public void setDataLimite(Date dataLimite) {
-        if (dataLimite.before(dataCriada)) this.dataLimite = new Date();
-        else this.dataLimite = dataLimite;
+    public void setDataLimite(LocalDate dataLimite) {
+        this.dataLimite = dataLimite;
     }
 
     public String getTitulo() {

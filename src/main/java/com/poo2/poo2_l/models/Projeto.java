@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -21,15 +22,16 @@ public class Projeto implements IEntidade, Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "dataInicio")
-    private Date dataInicio;
+    private LocalDate dataInicio;
 
     public Projeto() {
     }
 
-    public Projeto(String titulo, String descricao, Date dataInicio) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.dataInicio = dataInicio;
+    public Projeto(String titulo, String descricao, LocalDate dataInicio) {
+        this();
+        this.setTitulo(titulo);
+        this.setDescricao(descricao);
+        this.setDataInicio(dataInicio);
     }
 
     @Override
@@ -46,7 +48,10 @@ public class Projeto implements IEntidade, Serializable {
     }
 
     public void setTitulo(String titulo) {
-        this.titulo = titulo;
+        if (titulo.length() == 0)
+            this.titulo = "Sem Título";
+        else
+            this.titulo = titulo;
     }
 
     public String getDescricao() {
@@ -58,11 +63,11 @@ public class Projeto implements IEntidade, Serializable {
         else this.descricao = descricao;
     }
 
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
@@ -78,4 +83,5 @@ public class Projeto implements IEntidade, Serializable {
     public int hashCode() {
         return Objects.hash(this.id);
     }
+
 }

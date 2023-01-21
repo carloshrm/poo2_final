@@ -1,5 +1,6 @@
 package com.poo2.poo2_l.controllers;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import com.poo2.poo2_l.controllers.db.DatabaseController;
@@ -34,8 +35,8 @@ class DatabaseControllerTest {
         var exemplosLocais = new ArrayList<IEntidade>();
         for (int i = 0; i < 100; i++) {
             exemplosLocais.add(r.nextInt() % 2 == 0
-                    ? (new Tarefa("Exemplo " + i, new Date(), "Desc " + i))
-                    : (new Projeto("Exemplo" + i, "Desc" + i, new Date()))
+                    ? (new Tarefa("Exemplo " + i, LocalDate.now(), "Desc " + i))
+                    : (new Projeto("Exemplo" + i, "Desc" + i, LocalDate.now()))
             );
             _dbc.setEntidade(exemplosLocais.get(i));
         }
@@ -49,7 +50,7 @@ class DatabaseControllerTest {
 
     @Test
     public void setTarefaTest() {
-        var exemplo = new Tarefa("Exemplo de Set", new Date(), "Teste Set");
+        var exemplo = new Tarefa("Exemplo de Set", LocalDate.now(), "Teste Set");
         _dbc.setEntidade(exemplo);
         assertNotNull(_dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass()));
         exemplosUsados.add(exemplo);
@@ -57,7 +58,7 @@ class DatabaseControllerTest {
 
     @Test
     public void setProjetoTest() {
-        var exemplo = new Projeto("Titulo 1", "Descricao 1", new Date());
+        var exemplo = new Projeto("Titulo 1", "Descricao 1", LocalDate.now());
         _dbc.setEntidade(exemplo);
         var respostaDB = _dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass());
         assertNotNull(respostaDB);
@@ -67,7 +68,7 @@ class DatabaseControllerTest {
 
     @Test
     public void removeTarefaTest() {
-        var exemplo = new Tarefa("Exemplo de Remove", new Date(), "Teste Remove");
+        var exemplo = new Tarefa("Exemplo de Remove", LocalDate.now(), "Teste Remove");
         _dbc.setEntidade(exemplo);
         _dbc.removeEntidade(exemplo);
         assertNull(_dbc.getEntidadePorID(exemplo.getId(), exemplo.getClass()));
@@ -75,7 +76,7 @@ class DatabaseControllerTest {
 
     @Test
     public void editaTarefaTest() {
-        var exemplo = new Tarefa("Exemplo de Update", new Date(), "Teste Update");
+        var exemplo = new Tarefa("Exemplo de Update", LocalDate.now(), "Teste Update");
         _dbc.setEntidade(exemplo);
         String tituloOriginal = exemplo.getTitulo();
         String descOriginal = exemplo.getDescricao();

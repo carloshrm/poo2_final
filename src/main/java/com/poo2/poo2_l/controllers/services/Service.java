@@ -4,8 +4,8 @@ import com.poo2.poo2_l.models.IEntidade;
 
 import java.util.Set;
 
-public abstract class Service<T extends IEntidade> {
-    abstract Set<T> getTudo();
-    abstract T getPorID(Long id);
-    abstract void criar(T e);
+public interface Service<T extends IEntidade> {
+    Set<T> getTudo();
+    T getPorID(Long id);
+    void criar(T e);
 }

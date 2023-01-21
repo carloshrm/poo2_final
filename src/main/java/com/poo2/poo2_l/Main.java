@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Main extends Application {
@@ -30,19 +31,20 @@ public class Main extends Application {
     }
 
     public void exemplos() {
-        var ctrl = new ProjetoService();
-        var p = ctrl.getTudo();
+
+        var p = ProjetoService.getInstance().getTudo();
         if (p == null || p.isEmpty()) {
-            ctrl.criar(new Projeto("Exemplo 1", "Exemplo de projeto", new Date()));
+            ProjetoService.getInstance().criar(new Projeto("Exemplo 1", "Exemplo de projeto", LocalDate.now()));
         }
-        var ctrl2 = new TarefaService();
-        var t = ctrl2.getTudo();
+
+        var tctrl = TarefaService.getInstance();
+        var t = tctrl.getTudo();
         if (t == null || t.isEmpty()) {
-            ctrl2.criar(new Tarefa("Titulo 1", new Date(), "Exemplo 1"));
-            ctrl2.criar(new Tarefa("Titulo 2", new Date(), "Exemplo 2"));
-            var t3 = new Tarefa("Titulo 3", new Date(), "Exemplo 3");
-            t3.setProjeto(ctrl.getTudo().iterator().next());
-            ctrl2.criar(t3);
+            tctrl.criar(new Tarefa("Titulo 1", LocalDate.now(), "Exemplo 1"));
+            tctrl.criar(new Tarefa("Titulo 2", LocalDate.now(), "Exemplo 2"));
+            var t3 = new Tarefa("Titulo 3", LocalDate.now(), "Exemplo 3");
+            t3.setProjeto(ProjetoService.getInstance().getTudo().iterator().next());
+            tctrl.criar(t3);
         }
 
     }

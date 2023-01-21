@@ -14,12 +14,19 @@ import java.util.Set;
  * Esta classe procura implementar o padrão facade, garantindo o comportamento correto da lógica do programa em relação
  * ao banco de dados, simplificando quaisquer operações sobre os dados do programa.
  */
-public class TarefaService extends Service<Tarefa> {
+public class TarefaService implements Service<Tarefa> {
+    private static TarefaService _tarefaService;
     private final Set<Tarefa> _todas;
 
-    public TarefaService() {
+    private TarefaService() {
         _todas = new HashSet<>();
         lerTarefas();
+    }
+
+    public static TarefaService getInstance() {
+        if (_tarefaService == null)
+            _tarefaService = new TarefaService();
+        return _tarefaService;
     }
 
     private void lerTarefas() {
@@ -56,5 +63,10 @@ public class TarefaService extends Service<Tarefa> {
     public void criar(Tarefa t) {
         _todas.add(t);
         DatabaseController.getDBControl().setEntidade(t);
+    }
+
+    public void atualizar(Tarefa t) {
+        DatabaseController.getDBControl().updateEntidade(t);
+        lerTarefas();
     }
 }

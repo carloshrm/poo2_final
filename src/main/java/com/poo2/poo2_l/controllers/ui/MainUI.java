@@ -9,16 +9,20 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.io.IOException;
-
-public class MainControlUI {
+public class MainUI implements IObserver {
+    @FXML
+    private MenuItem menuNovoProjeto;
     @FXML
     private TabPane painelPrincipal;
-    private TarefaService _tarefaService;
-    private ProjetoService _projetoService;
+    private TarefaService tarSvc;
+    private ProjetoService projSvc;
 
     @FXML
     public void initialize() {
@@ -27,19 +31,33 @@ public class MainControlUI {
     }
 
     private void setServices() {
-        this._tarefaService = new TarefaService();
-        this._projetoService = new ProjetoService();
+        this.tarSvc = TarefaService.getInstance();
+        this.projSvc = ProjetoService.getInstance();
+        projSvc.registrarObserver(this);
     }
 
     private void setTabs() {
         painelPrincipal.getTabs().get(0).setContent(configurarTab(null));
-
-        var projetosDoUsuario = _projetoService.getTudo().stream().map(p -> {
+        var projetosDoUsuario = projSvc.getTudo().stream().map(p -> {
             var t = new Tab(p.getTitulo());
             t.setUserData(p);
+            t.setId(p.getId().toString());
             return t;
         }).toList();
-        painelPrincipal.getTabs().addAll(projetosDoUsuario);
+        for (Tab tabNovas : projetosDoUsuario) {
+            boolean ok = true;
+            for (Tab tabUI : painelPrincipal.getTabs()) {
+                var projeto = (Projeto) tabNovas.getUserData();
+                if (tabNovas.getUserData() == tabUI.getUserData()) {
+                    tabUI.setText(projeto.getTitulo());
+                    tabUI.setContent(configurarTab(projeto));
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok)
+                painelPrincipal.getTabs().add(tabNovas);
+        }
         painelPrincipal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> evento, Tab tabAnt, Tab tabClicada) {
@@ -54,8 +72,8 @@ public class MainControlUI {
         Node n = null;
         try {
             n = loader.load();
-            ProjetoControlUI ctrl = loader.getController();
-            ctrl.setInfo(p, _tarefaService.getPorProjeto(p));
+            ProjetoUI ctrl = loader.getController();
+            ctrl.setInfo(p, tarSvc.getPorProjeto(p));
             loader.setController(ctrl);
             return n;
         } catch (Exception e) {
@@ -65,4 +83,13 @@ public class MainControlUI {
         return null;
     }
 
+    @FXML
+    private void onNovoProjeto() {
+        ViewService.getInstance().getProjetoForm(null).show();
+    }
+
+    @Override
+    public void update() {
+        setTabs();
+    }
 }
