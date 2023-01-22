@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="0.0" maxWidth="0.0" minHeight="480.0" minWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.poo2.poo2_l.controllers.ui.MainUI">
+<VBox alignment="CENTER" minHeight="480.0" minWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.poo2.poo2_l.controllers.ui.MainView">
    <children>
       <MenuBar VBox.vgrow="ALWAYS">
         <menus>
@@ -24,7 +24,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TabPane fx:id="painelPrincipal" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+      <TabPane fx:id="painelPrincipal" minHeight="400.0" minWidth="640.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
          <tabs>
             <Tab text="Principal">
               <content>

@@ -9,11 +9,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.time.Instant;
-import java.util.Date;
 
-
-public class ProjetoFormUI {
+public class ProjetoFormView {
     @FXML
     private TextField fieldTitulo;
     @FXML

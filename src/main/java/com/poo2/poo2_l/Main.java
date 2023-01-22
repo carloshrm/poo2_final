@@ -22,6 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         exemplos();
+        System.setProperty("prism.lcdtext", "false");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/Main.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(Main.class.getResource("view/Main.css").toExternalForm());

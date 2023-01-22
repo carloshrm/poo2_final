@@ -31,7 +31,10 @@ public class Projeto implements IEntidade, Serializable {
         this();
         this.setTitulo(titulo);
         this.setDescricao(descricao);
-        this.setDataInicio(dataInicio);
+        if (dataInicio == null || dataInicio.isAfter(LocalDate.now()))
+            this.setDataInicio(LocalDate.now());
+        else
+            this.setDataInicio(dataInicio);
     }
 
     @Override

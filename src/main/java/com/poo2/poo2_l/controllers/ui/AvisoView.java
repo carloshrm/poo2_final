@@ -6,9 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.util.concurrent.Callable;
-
-public class AvisoUI {
+public class AvisoView {
     @FXML
     private Label avisoLabel;
     @FXML

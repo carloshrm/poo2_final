@@ -6,15 +6,14 @@ import com.poo2.poo2_l.models.Projeto;
 import com.poo2.poo2_l.models.Tarefa;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
 import java.util.Set;
-import java.util.concurrent.Callable;
 
-public class ProjetoUI extends FlowPane {
-
+public class ProjetoView extends FlowPane {
     @FXML
     private Label projetoTituloLabel;
     @FXML
@@ -27,6 +26,8 @@ public class ProjetoUI extends FlowPane {
     private Button adicionarTarefa;
     @FXML
     private Button removerProjeto;
+    @FXML
+    private DatePicker dataInicio;
 
     private Projeto _projeto;
     private Set<Tarefa> _tarefas;
@@ -37,13 +38,15 @@ public class ProjetoUI extends FlowPane {
         if (_projeto != null) {
             projetoTituloLabel.setText(_projeto.getTitulo());
             projetoDescLabel.setText(_projeto.getDescricao());
+            dataInicio.setValue(_projeto.getDataInicio());
         } else {
             projetoTituloLabel.setText("Tarefas");
             projetoDescLabel.setText("Tarefas sem um projeto definido.");
-            editarProjeto.setDisable(true);
-            removerProjeto.setDisable(true);
+            editarProjeto.setVisible(false);
+            removerProjeto.setVisible(false);
+            dataInicio.setVisible(false);
         }
-        var info = _tarefas.stream().map(tr -> new Label(tr.toString())).toList();
+        var info = _tarefas.stream().map(trf -> ViewService.getInstance().getTarefaView(trf)).toList();
         tarefasPane.getChildren().addAll(info);
     }
 
