@@ -52,6 +52,7 @@ public class ProjetoService implements Service<Projeto> {
 
     public void atualizar(Projeto p) {
         DatabaseController.getDBControl().updateEntidade(p);
+        lerProjetos();
         sinalizarObservers();
     }
 

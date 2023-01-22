@@ -9,12 +9,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
+import java.util.ArrayList;
 
 public class MainUI implements IObserver {
     @FXML
@@ -27,7 +26,7 @@ public class MainUI implements IObserver {
     @FXML
     public void initialize() {
         setServices();
-        setTabs();
+        configurarTabs();
     }
 
     private void setServices() {
@@ -36,25 +35,46 @@ public class MainUI implements IObserver {
         projSvc.registrarObserver(this);
     }
 
-    private void setTabs() {
-        Tab tabPrincipal = painelPrincipal.getTabs().get(0);
-        tabPrincipal.setContent(configurarTab(null));
-        painelPrincipal.getTabs().clear();
-        var projetosDoUsuario = projSvc.getTudo().stream().map(p -> {
-            var t = new Tab(p.getTitulo());
-            t.setUserData(p);
-            t.setId(p.getId().toString());
-            return t;
-        }).toList();
-        painelPrincipal.getTabs().add(tabPrincipal);
-        painelPrincipal.getTabs().addAll(projetosDoUsuario);
-        painelPrincipal.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> evento, Tab tabAnt, Tab tabClicada) {
+    private void configurarTabs() {
+        painelPrincipal.getTabs().get(0).setContent(configurarTab(null));
+        painelPrincipal.getTabs().addAll(projSvc.getTudo().stream().map(this::fazerTab).toList());
+        painelPrincipal.getSelectionModel().selectedItemProperty().addListener((evento, tabAnt, tabClicada) -> {
+            if (tabClicada != null) {
                 var projeto = (Projeto) tabClicada.getUserData();
                 tabClicada.setContent(configurarTab(projeto));
             }
         });
+    }
+
+    private Tab fazerTab(Projeto p) {
+        var t = new Tab(p.getTitulo());
+        t.setUserData(p);
+        t.setId(p.getId().toString());
+        return t;
+    }
+
+    private void atualizarTabs() {
+        var tabAtiva = painelPrincipal.getSelectionModel().getSelectedItem();
+
+        var projetosDB = projSvc.getTudo();
+        var removidos = new ArrayList<Tab>();
+        painelPrincipal.getTabs().forEach(tab -> {
+            var projTab = (Projeto) tab.getUserData();
+            if (projTab != null) {
+                if (projetosDB.contains(projTab)) {
+                    tab.setText(projTab.getTitulo());
+                    projetosDB.remove(projTab);
+                } else {
+                    removidos.add(tab);
+                }
+            }
+        });
+        painelPrincipal.getTabs().removeAll(removidos);
+        projetosDB.forEach(projDB -> painelPrincipal.getTabs().add(fazerTab(projDB)));
+        painelPrincipal.getSelectionModel().clearSelection();
+        if (!removidos.contains(tabAtiva)) {
+            painelPrincipal.getSelectionModel().select(tabAtiva);
+        }
     }
 
     private Node configurarTab(Projeto p) {
@@ -80,6 +100,6 @@ public class MainUI implements IObserver {
 
     @Override
     public void update() {
-        setTabs();
+        atualizarTabs();
     }
 }
