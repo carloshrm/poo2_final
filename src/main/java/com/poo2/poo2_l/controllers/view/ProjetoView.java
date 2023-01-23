@@ -25,7 +25,7 @@ public class ProjetoView extends FlowPane implements IObserver {
     @FXML
     private Button removerProjeto;
     @FXML
-    private DatePicker dataInicio;
+    private Label dataInicio;
 
     private Projeto _projeto;
 
@@ -34,7 +34,7 @@ public class ProjetoView extends FlowPane implements IObserver {
         if (_projeto != null) {
             projetoTituloLabel.setText(_projeto.getTitulo());
             projetoDescLabel.setText(_projeto.getDescricao());
-            dataInicio.setValue(_projeto.getDataInicio());
+            dataInicio.setText(_projeto.getDataInicio().toString());
         } else {
             projetoTituloLabel.setText("Tarefas");
             projetoDescLabel.setText("Tarefas sem um projeto definido.");
