@@ -1,10 +1,9 @@
 package com.poo2.poo2_l.controllers.services;
 
 import com.poo2.poo2_l.controllers.db.DatabaseController;
-import com.poo2.poo2_l.controllers.ui.IObserver;
-import com.poo2.poo2_l.models.IEntidade;
+import com.poo2.poo2_l.controllers.view.IObserver;
+import com.poo2.poo2_l.Interfaces.IEntidade;
 import com.poo2.poo2_l.models.Projeto;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 
 import java.util.*;
 
@@ -31,6 +30,7 @@ public class ProjetoService implements Service<Projeto> {
             _todos.clear();
             _todos.addAll(query);
         }
+        sinalizarObservers();
     }
 
     @Override
@@ -45,15 +45,13 @@ public class ProjetoService implements Service<Projeto> {
 
     @Override
     public void criar(Projeto e) {
-        _todos.add(e);
         DatabaseController.getDBControl().setEntidade(e);
-        sinalizarObservers();
+        lerProjetos();
     }
 
     public void atualizar(Projeto p) {
         DatabaseController.getDBControl().updateEntidade(p);
         lerProjetos();
-        sinalizarObservers();
     }
 
     public void remover(Projeto p) {
@@ -65,9 +63,7 @@ public class ProjetoService implements Service<Projeto> {
         });
         DatabaseController.getDBControl().removeEntidade(p);
         lerProjetos();
-        sinalizarObservers();
     }
-
 
     private void sinalizarObservers() {
         observers.forEach(o -> o.update());

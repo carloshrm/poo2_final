@@ -1,19 +1,17 @@
-package com.poo2.poo2_l.controllers.ui;
+package com.poo2.poo2_l.controllers.view;
 
-import com.poo2.poo2_l.IComando;
+import com.poo2.poo2_l.Interfaces.IComando;
 import com.poo2.poo2_l.controllers.services.ProjetoService;
+import com.poo2.poo2_l.controllers.services.TarefaService;
 import com.poo2.poo2_l.models.Projeto;
-import com.poo2.poo2_l.models.Tarefa;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
-import java.util.Set;
-
-public class ProjetoView extends FlowPane {
+public class ProjetoView extends FlowPane implements IObserver {
+    @FXML
+    private Label criadoTextoLabel;
     @FXML
     private Label projetoTituloLabel;
     @FXML
@@ -30,11 +28,9 @@ public class ProjetoView extends FlowPane {
     private DatePicker dataInicio;
 
     private Projeto _projeto;
-    private Set<Tarefa> _tarefas;
 
-    public void setInfo(Projeto p, Set<Tarefa> t) {
+    public void setup(Projeto p) {
         _projeto = p;
-        _tarefas = t;
         if (_projeto != null) {
             projetoTituloLabel.setText(_projeto.getTitulo());
             projetoDescLabel.setText(_projeto.getDescricao());
@@ -45,14 +41,20 @@ public class ProjetoView extends FlowPane {
             editarProjeto.setVisible(false);
             removerProjeto.setVisible(false);
             dataInicio.setVisible(false);
+            criadoTextoLabel.setVisible(false);
         }
-        var info = _tarefas.stream().map(trf -> ViewService.getInstance().getTarefaView(trf)).toList();
-        tarefasPane.getChildren().addAll(info);
+        TarefaService.getInstance().registrarObserver(this);
+        popularTarefas();
+    }
+
+    private void popularTarefas() {
+        tarefasPane.getChildren().clear();
+        tarefasPane.getChildren().addAll(TarefaService.getInstance().getPorProjeto(_projeto).stream().map(trf -> ViewService.getInstance().getTarefaView(trf)).toList());
     }
 
     @FXML
     private void onAdicionarTarefa() {
-        System.out.println("add tar");
+        ViewService.getInstance().getTarefaForm(null, _projeto).show();
     }
 
     @FXML
@@ -68,7 +70,15 @@ public class ProjetoView extends FlowPane {
                 ProjetoService.getInstance().remover(_projeto);
             }
         };
-        ViewService.getInstance().fazerAviso(comando, "Tem certeza que deseja remover esse projeto? As tarefas serão movidas para a seção sem projeto.").show();
+        ViewService.getInstance().getAviso(comando, "Tem certeza que deseja remover esse projeto? As tarefas serão movidas para a seção sem projeto.").show();
     }
 
+    public void onTroca() {
+        TarefaService.getInstance().removerObserver(this);
+    }
+
+    @Override
+    public void update() {
+        popularTarefas();
+    }
 }

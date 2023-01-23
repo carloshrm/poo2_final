@@ -1,4 +1,4 @@
-package com.poo2.poo2_l.controllers.ui;
+package com.poo2.poo2_l.controllers.view;
 
 import com.poo2.poo2_l.controllers.services.ProjetoService;
 import com.poo2.poo2_l.models.Projeto;
@@ -22,15 +22,15 @@ public class ProjetoFormView {
     @FXML
     private Button okButton;
 
-    private Projeto projetoEditado;
+    private Projeto projetoEdit;
 
-    public void setEdicao(Projeto p) {
-        projetoEditado = p;
-        if (projetoEditado != null) {
+    public void setup(Projeto p) {
+        projetoEdit = p;
+        if (projetoEdit != null) {
             okButton.setText("Confirmar");
-            fieldTitulo.setText(projetoEditado.getTitulo());
-            fieldDesc.setText(projetoEditado.getDescricao());
-            fieldData.setValue(projetoEditado.getDataInicio());
+            fieldTitulo.setText(projetoEdit.getTitulo());
+            fieldDesc.setText(projetoEdit.getDescricao());
+            fieldData.setValue(projetoEdit.getDataInicio());
         }
     }
 
@@ -41,16 +41,14 @@ public class ProjetoFormView {
 
     @FXML
     private void onOkAction() {
-        if (projetoEditado != null) {
-            projetoEditado.setTitulo(fieldTitulo.getText());
-            projetoEditado.setDescricao(fieldDesc.getText());
-            projetoEditado.setDataInicio(fieldData.getValue());
-            ProjetoService.getInstance().atualizar(projetoEditado);
+        if (projetoEdit != null) {
+            projetoEdit.setTitulo(fieldTitulo.getText());
+            projetoEdit.setDescricao(fieldDesc.getText());
+            projetoEdit.setDataInicio(fieldData.getValue());
+            ProjetoService.getInstance().atualizar(projetoEdit);
         } else {
             ProjetoService.getInstance().criar(new Projeto(fieldTitulo.getText(), fieldDesc.getText(), fieldData.getValue()));
         }
         ((Stage) okButton.getScene().getWindow()).close();
     }
-
-
 }
