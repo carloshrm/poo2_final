@@ -49,6 +49,7 @@ public class MainView implements IObserver {
     }
 
     private void atualizarTabs() {
+        var tabAtual = painelPrincipal.getSelectionModel().getSelectedItem();
         var projetosDB = projSvc.getTudo();
         var removidos = new ArrayList<Tab>();
         painelPrincipal.getTabs().forEach(tab -> {
@@ -64,8 +65,8 @@ public class MainView implements IObserver {
         });
         painelPrincipal.getTabs().removeAll(removidos);
         projetosDB.forEach(projDB -> painelPrincipal.getTabs().add(fazerTab(projDB)));
-        painelPrincipal.getSelectionModel().clearSelection();
-        painelPrincipal.getSelectionModel().selectLast();
+        if (!removidos.contains(tabAtual.getUserData()))
+            tabAtual.setContent(ViewService.getInstance().getProjetoView((Projeto) tabAtual.getUserData()));
     }
 
     @FXML

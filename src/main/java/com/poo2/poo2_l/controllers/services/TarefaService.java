@@ -33,8 +33,8 @@ public class TarefaService implements Service<Tarefa>, IObservable {
 
     private void lerTarefas() {
         var query = DatabaseController.getDBControl().getTabela(Tarefa.class);
+        _todas.clear();
         if (!query.isEmpty() && query.iterator().next() instanceof IEntidade) {
-            _todas.clear();
             _todas.addAll(query);
         }
         if (observer != null)

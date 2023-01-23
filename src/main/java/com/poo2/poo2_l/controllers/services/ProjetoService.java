@@ -26,8 +26,8 @@ public class ProjetoService implements Service<Projeto> {
 
     private void lerProjetos() {
         var query = DatabaseController.getDBControl().getTabela(Projeto.class);
+        _todos.clear();
         if (!query.isEmpty() && query.iterator().next() instanceof IEntidade) {
-            _todos.clear();
             _todos.addAll(query);
         }
         sinalizarObservers();
