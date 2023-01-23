@@ -1,9 +1,9 @@
 package com.poo2.poo2_l.models;
 
+import com.poo2.poo2_l.Interfaces.IEntidade;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -31,18 +31,25 @@ public class Tarefa implements IEntidade {
     }
 
     public Tarefa(String titulo, LocalDate dataLimite, String descricao) {
-        this.descricao = descricao;
-        this.dataCriada = LocalDate.now();
-        this.dataLimite = dataLimite;
-        this.titulo = titulo;
+        this.setDescricao(descricao);
+        this.setTitulo(titulo);
+        this.setDataLimite(dataLimite);
+        this.setDataCriada(LocalDate.now());
+    }
+
+    public Tarefa(String titulo, LocalDate dataLimite, String descricao, LocalDate dataCriada) {
+        this(titulo, dataLimite, descricao);
+        this.setDataCriada(dataCriada);
     }
 
     @Override
     public Long getId() {
-    return id;
-}
+        return id;
+    }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Projeto getProjeto() {
         return projeto;
@@ -57,7 +64,10 @@ public class Tarefa implements IEntidade {
     }
 
     public void setDataCriada(LocalDate dataCriada) {
-        this.dataCriada = dataCriada;
+        if (dataCriada == null || dataCriada.isAfter(LocalDate.now()))
+            this.dataCriada = LocalDate.now();
+        else
+            this.dataCriada = dataCriada;
     }
 
     public LocalDate getDataLimite() {
@@ -65,7 +75,10 @@ public class Tarefa implements IEntidade {
     }
 
     public void setDataLimite(LocalDate dataLimite) {
-        this.dataLimite = dataLimite;
+        if (dataLimite == null) {
+            this.dataLimite = LocalDate.now();
+        } else
+            this.dataLimite = dataLimite;
     }
 
     public String getTitulo() {

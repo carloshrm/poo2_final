@@ -1,4 +1,4 @@
-package com.poo2.poo2_l.controllers.ui;
+package com.poo2.poo2_l.controllers.view;
 
 import com.poo2.poo2_l.models.Tarefa;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ public class TarefaView extends TitledPane {
     @FXML
     private Button removerTarefa;
 
-    public void setInfo(Tarefa t) {
+    public void setup(Tarefa t) {
         tarefaPrincipal.setText(t.getTitulo());
         tarefaDesc.setText(t.getDescricao());
         dataCriada.setValue(t.getDataCriada());

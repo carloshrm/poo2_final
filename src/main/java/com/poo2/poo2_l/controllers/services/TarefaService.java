@@ -1,7 +1,9 @@
 package com.poo2.poo2_l.controllers.services;
 
 import com.poo2.poo2_l.controllers.db.DatabaseController;
-import com.poo2.poo2_l.models.IEntidade;
+import com.poo2.poo2_l.controllers.view.IObservable;
+import com.poo2.poo2_l.controllers.view.IObserver;
+import com.poo2.poo2_l.Interfaces.IEntidade;
 import com.poo2.poo2_l.models.Projeto;
 import com.poo2.poo2_l.models.Tarefa;
 
@@ -14,9 +16,10 @@ import java.util.Set;
  * Esta classe procura implementar o padrão facade, garantindo o comportamento correto da lógica do programa em relação
  * ao banco de dados, simplificando quaisquer operações sobre os dados do programa.
  */
-public class TarefaService implements Service<Tarefa> {
+public class TarefaService implements Service<Tarefa>, IObservable {
     private static TarefaService _tarefaService;
     private final Set<Tarefa> _todas;
+    private IObserver observer;
 
     private TarefaService() {
         _todas = new HashSet<>();
@@ -24,8 +27,7 @@ public class TarefaService implements Service<Tarefa> {
     }
 
     public static TarefaService getInstance() {
-        if (_tarefaService == null)
-            _tarefaService = new TarefaService();
+        if (_tarefaService == null) _tarefaService = new TarefaService();
         return _tarefaService;
     }
 
@@ -35,16 +37,15 @@ public class TarefaService implements Service<Tarefa> {
             _todas.clear();
             _todas.addAll(query);
         }
+        if (observer != null)
+            sinalizarObservers();
     }
 
     public Set<Tarefa> getPorProjeto(Projeto p) {
-        lerTarefas();
         return new HashSet<>(_todas.stream().filter(t -> {
             var prj = t.getProjeto();
-            if (prj != null)
-                return prj.equals(p);
-            else
-                return p == null;
+            if (prj != null) return prj.equals(p);
+            else return p == null;
         }).toList());
     }
 
@@ -55,18 +56,37 @@ public class TarefaService implements Service<Tarefa> {
 
     @Override
     public Set<Tarefa> getTudo() {
-        lerTarefas();
         return _todas;
     }
 
     @Override
     public void criar(Tarefa t) {
-        _todas.add(t);
         DatabaseController.getDBControl().setEntidade(t);
+        lerTarefas();
     }
 
     public void atualizar(Tarefa t) {
         DatabaseController.getDBControl().updateEntidade(t);
         lerTarefas();
+    }
+
+    public void remover(Tarefa t) {
+        DatabaseController.getDBControl().removeEntidade(t);
+        lerTarefas();
+    }
+
+    @Override
+    public void sinalizarObservers() {
+        observer.update();
+    }
+
+    @Override
+    public void registrarObserver(IObserver o) {
+        observer = o;
+    }
+
+    @Override
+    public void removerObserver(IObserver o) {
+        observer = null;
     }
 }
