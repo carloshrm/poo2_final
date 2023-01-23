@@ -64,6 +64,7 @@ public class MainView implements IObserver {
         });
         painelPrincipal.getTabs().removeAll(removidos);
         projetosDB.forEach(projDB -> painelPrincipal.getTabs().add(fazerTab(projDB)));
+        painelPrincipal.getSelectionModel().clearSelection();
         painelPrincipal.getSelectionModel().selectLast();
     }
 
