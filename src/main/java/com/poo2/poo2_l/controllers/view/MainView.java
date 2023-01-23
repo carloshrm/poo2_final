@@ -1,12 +1,9 @@
-package com.poo2.poo2_l.controllers.ui;
+package com.poo2.poo2_l.controllers.view;
 
-import com.poo2.poo2_l.Main;
 import com.poo2.poo2_l.controllers.services.ProjetoService;
 import com.poo2.poo2_l.controllers.services.TarefaService;
 import com.poo2.poo2_l.models.Projeto;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;

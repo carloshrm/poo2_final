@@ -1,4 +1,4 @@
-package com.poo2.poo2_l.models;
+package com.poo2.poo2_l.Interfaces;
 
 import jakarta.persistence.Entity;
 
