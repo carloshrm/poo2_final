@@ -1,6 +1,6 @@
-package com.poo2.poo2_l.controllers.ui;
+package com.poo2.poo2_l.controllers.view;
 
-import com.poo2.poo2_l.IComando;
+import com.poo2.poo2_l.Interfaces.IComando;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
