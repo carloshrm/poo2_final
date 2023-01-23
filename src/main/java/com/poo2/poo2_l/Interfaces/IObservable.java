@@ -1,4 +1,4 @@
-package com.poo2.poo2_l.controllers.view;
+package com.poo2.poo2_l.Interfaces;
 
 public interface IObservable {
 

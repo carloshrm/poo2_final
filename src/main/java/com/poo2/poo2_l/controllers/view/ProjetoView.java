@@ -1,6 +1,7 @@
 package com.poo2.poo2_l.controllers.view;
 
 import com.poo2.poo2_l.Interfaces.IComando;
+import com.poo2.poo2_l.Interfaces.IObserver;
 import com.poo2.poo2_l.controllers.services.ProjetoService;
 import com.poo2.poo2_l.controllers.services.TarefaService;
 import com.poo2.poo2_l.models.Projeto;

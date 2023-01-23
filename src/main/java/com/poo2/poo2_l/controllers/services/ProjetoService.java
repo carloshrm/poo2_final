@@ -1,7 +1,7 @@
 package com.poo2.poo2_l.controllers.services;
 
 import com.poo2.poo2_l.controllers.db.DatabaseController;
-import com.poo2.poo2_l.controllers.view.IObserver;
+import com.poo2.poo2_l.Interfaces.IObserver;
 import com.poo2.poo2_l.Interfaces.IEntidade;
 import com.poo2.poo2_l.models.Projeto;
 
