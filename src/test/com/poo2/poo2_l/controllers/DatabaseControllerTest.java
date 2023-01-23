@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import com.poo2.poo2_l.controllers.db.DatabaseController;
-import com.poo2.poo2_l.models.IEntidade;
+import com.poo2.poo2_l.Interfaces.IEntidade;
 import com.poo2.poo2_l.models.Projeto;
 import com.poo2.poo2_l.models.Tarefa;
 import org.junit.jupiter.api.Test;

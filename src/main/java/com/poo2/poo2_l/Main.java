@@ -5,6 +5,7 @@ import com.poo2.poo2_l.controllers.services.TarefaService;
 import com.poo2.poo2_l.models.Projeto;
 import com.poo2.poo2_l.models.Tarefa;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -28,11 +29,11 @@ public class Main extends Application {
         scene.getStylesheets().add(Main.class.getResource("view/Main.css").toExternalForm());
         stage.setTitle("Gerenciador de Tarefas");
         stage.setScene(scene);
+        stage.setOnCloseRequest((e) -> Platform.exit());
         stage.show();
     }
 
     public void exemplos() {
-
         var p = ProjetoService.getInstance().getTudo();
         if (p == null || p.isEmpty()) {
             ProjetoService.getInstance().criar(new Projeto("Exemplo 1", "Exemplo de projeto", LocalDate.now()));

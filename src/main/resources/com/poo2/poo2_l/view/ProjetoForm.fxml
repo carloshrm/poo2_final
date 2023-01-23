@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<TitledPane text="Novo Projeto:" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.poo2.poo2_l.controllers.ui.ProjetoFormView">
+<TitledPane text="Novo Projeto:" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.poo2.poo2_l.controllers.view.ProjetoFormView">
    <content>
       <GridPane minHeight="200.0" minWidth="400.0">
         <columnConstraints>

@@ -1,7 +1,7 @@
 package com.poo2.poo2_l.models;
 
+import com.poo2.poo2_l.Interfaces.IEntidade;
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -52,7 +52,7 @@ public class Projeto implements IEntidade, Serializable {
 
     public void setTitulo(String titulo) {
         if (titulo.length() == 0)
-            this.titulo = "Sem Título";
+            this.titulo = "Projeto sem Título";
         else
             this.titulo = titulo;
     }
@@ -62,7 +62,7 @@ public class Projeto implements IEntidade, Serializable {
     }
 
     public void setDescricao(String descricao) {
-        if (descricao.isBlank()) this.descricao = "Sem descrição";
+        if (descricao.isBlank()) this.descricao = "Projeto sem descrição";
         else this.descricao = descricao;
     }
 
