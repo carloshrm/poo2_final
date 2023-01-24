@@ -4,6 +4,7 @@ import com.poo2.poo2_l.Interfaces.IObserver;
 import com.poo2.poo2_l.controllers.services.ProjetoService;
 import com.poo2.poo2_l.controllers.services.TarefaService;
 import com.poo2.poo2_l.models.Projeto;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
@@ -78,5 +79,9 @@ public class MainView implements IObserver {
     @Override
     public void update() {
         atualizarTabs();
+    }
+
+    public void onSair() {
+        Platform.exit();
     }
 }

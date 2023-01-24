@@ -14,7 +14,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Arquivo">
             <items>
-              <MenuItem mnemonicParsing="false" text="Sair" />
+              <MenuItem mnemonicParsing="false" onAction="#onSair" text="Sair" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Projetos">
