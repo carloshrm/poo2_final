@@ -42,9 +42,9 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <ScrollPane maxHeight="400.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+            <ScrollPane fitToWidth="true" maxHeight="400.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <content>
-                  <VBox fx:id="tarefasPane" />
+                  <VBox fx:id="tarefasPane" alignment="TOP_CENTER" />
                </content>
             </ScrollPane>
             <Label text="Tarefas:" GridPane.rowIndex="2" />
